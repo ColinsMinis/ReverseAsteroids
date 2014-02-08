@@ -2,6 +2,8 @@ package info.nanodesu.reverseasteroids;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.tools.imagepacker.TexturePacker2;
+import com.badlogic.gdx.tools.imagepacker.TexturePacker2.Settings;
 
 public class Main {
 	public static void main(String[] args) {
@@ -11,6 +13,13 @@ public class Main {
 		cfg.width = 480;
 		cfg.height = 320;
 		
+//		packTextures();
+		
 		new LwjglApplication(new ReverseAsteroidsMain(), cfg);
+	}
+	
+	public static void packTextures() {
+		Settings packSettings = new Settings();
+		TexturePacker2.process(packSettings, "../asset_src/to_pack", "../ReverseAsteroids-android/assets/gfx", "game");		
 	}
 }
