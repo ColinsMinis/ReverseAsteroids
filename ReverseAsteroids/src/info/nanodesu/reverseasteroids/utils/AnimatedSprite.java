@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 
 public class AnimatedSprite extends Sprite implements Simulate {
 	private Animation ani;
@@ -23,6 +24,14 @@ public class AnimatedSprite extends Sprite implements Simulate {
 	public AnimatedSprite(Animation ani) {
 		this.ani = ani;
 		this.stateTime = 0;
+	}
+	
+	public void setAnimation(Animation ani) {
+		this.ani = ani;
+	}
+	
+	public float getStateTime() {
+		return stateTime;
 	}
 	
 	public Animation getAnimation() {
@@ -82,8 +91,12 @@ public class AnimatedSprite extends Sprite implements Simulate {
 		float xDiff = moveSpeedX * dt;
 		float yDiff = moveSpeedY * dt;
 		
-		setRotation(getRotation() + rDiff);
+		rotate(rDiff);
 		translate(xDiff, yDiff);
+	}
+	
+	public void rotateTowards(float x, float y) {
+		setRotation(MathUtils.atan2(y, x) * MathUtils.radiansToDegrees);
 	}
 	
 	public float getXByOrgin() {

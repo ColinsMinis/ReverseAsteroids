@@ -213,31 +213,31 @@ ingame/explosions
   orig: 512, 512
   offset: 0, 0
   index: -1
-ingame/ship0
-  rotate: false
-  xy: 516, 277
-  size: 162, 238
-  orig: 162, 238
-  offset: 0, 0
-  index: -1
-ingame/ship1
+ingame/ship
   rotate: false
   xy: 804, 695
   size: 172, 302
   orig: 172, 302
   offset: 0, 0
-  index: -1
-ingame/ship3
+  index: 1
+ingame/ship
   rotate: false
-  xy: 804, 521
-  size: 108, 172
-  orig: 108, 172
+  xy: 516, 277
+  size: 162, 238
+  orig: 162, 238
   offset: 0, 0
-  index: -1
-ingame/ship4
+  index: 0
+ingame/ship
   rotate: false
   xy: 516, 68
   size: 98, 207
   orig: 98, 207
   offset: 0, 0
-  index: -1
+  index: 4
+ingame/ship
+  rotate: false
+  xy: 804, 521
+  size: 108, 172
+  orig: 108, 172
+  offset: 0, 0
+  index: 3
