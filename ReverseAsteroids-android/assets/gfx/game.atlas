@@ -3,202 +3,118 @@ game.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-ingame/Asteroids
+ingame/alien
   rotate: false
   xy: 680, 451
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
-ingame/Asteroids
+ingame/alien
   rotate: false
   xy: 680, 385
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 2
-ingame/Asteroids
+  index: 10
+ingame/alien
   rotate: false
   xy: 680, 319
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 3
-ingame/Asteroids
+  index: 11
+ingame/alien
   rotate: false
   xy: 516, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 4
-ingame/Asteroids
+  index: 12
+ingame/alien
   rotate: false
   xy: 616, 211
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 5
-ingame/Asteroids
+  index: 13
+ingame/alien
   rotate: false
   xy: 616, 145
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 6
-ingame/Asteroids
-  rotate: false
-  xy: 616, 79
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 7
-ingame/Asteroids
-  rotate: false
-  xy: 914, 629
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 8
-ingame/Asteroids
-  rotate: false
-  xy: 914, 563
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 9
-ingame/Asteroids
-  rotate: false
-  xy: 746, 451
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 10
-ingame/Asteroids
-  rotate: false
-  xy: 746, 385
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 11
-ingame/Asteroids
-  rotate: false
-  xy: 746, 319
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 12
-ingame/Asteroids
-  rotate: false
-  xy: 812, 455
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 13
-ingame/alien
-  rotate: false
-  xy: 812, 389
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 1
-ingame/alien
-  rotate: false
-  xy: 812, 323
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 10
-ingame/alien
-  rotate: false
-  xy: 914, 497
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 11
-ingame/alien
-  rotate: false
-  xy: 582, 2
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 12
-ingame/alien
-  rotate: false
-  xy: 878, 431
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 13
-ingame/alien
-  rotate: false
-  xy: 878, 365
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 14
 ingame/alien
   rotate: false
-  xy: 878, 299
+  xy: 616, 79
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 15
 ingame/alien
   rotate: false
-  xy: 944, 431
+  xy: 914, 629
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 ingame/alien
   rotate: false
-  xy: 944, 365
+  xy: 914, 563
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 3
 ingame/alien
   rotate: false
-  xy: 944, 299
+  xy: 746, 451
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 4
 ingame/alien
   rotate: false
-  xy: 812, 257
+  xy: 746, 385
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 5
 ingame/alien
   rotate: false
-  xy: 878, 233
+  xy: 746, 319
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 6
 ingame/alien
   rotate: false
-  xy: 944, 233
+  xy: 812, 455
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 7
 ingame/alien
   rotate: false
-  xy: 682, 253
+  xy: 812, 389
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 8
 ingame/alien
   rotate: false
-  xy: 682, 187
+  xy: 812, 323
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 9
+ingame/asteroid
+  rotate: false
+  xy: 914, 497
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 ingame/background
   rotate: false
   xy: 2, 517

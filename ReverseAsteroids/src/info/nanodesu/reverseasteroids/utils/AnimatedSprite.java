@@ -26,7 +26,17 @@ public class AnimatedSprite extends Sprite implements Simulate {
 		this.stateTime = 0;
 	}
 	
+	public void growByOrigin(float newWidth, float newHeight) {
+		float diffW = newWidth - getWidth();
+		float diffH = newHeight - getHeight();
+		
+		setSize(newWidth, newHeight);
+		setOrigin(getWidth()/2, getHeight()/2);
+		translate(-diffW/2, -diffH/2);
+	}
+	
 	public void setAnimation(Animation ani) {
+		resetAnimState();
 		this.ani = ani;
 	}
 	
@@ -83,7 +93,8 @@ public class AnimatedSprite extends Sprite implements Simulate {
 	
 	private void animate(float dt) {
 		stateTime += dt;
-		setRegion(ani.getKeyFrame(stateTime));
+		TextureRegion keyFrame = ani.getKeyFrame(stateTime);
+		setRegion(keyFrame);
 	}
 
 	private void move(float dt) {

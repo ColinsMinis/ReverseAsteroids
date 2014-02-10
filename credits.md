@@ -11,14 +11,16 @@ Graphics
 
 Explosion effects: Ville Seppanen, villeseppanen.com, http://opengameart.org/content/8-explosions-animated
 
-Asteroids: GameArtForge, http://opengameart.org/content/asteroids-set-01, http://opengameart.org/content/asteroids-set-02
+Asteroid: GameArtForge, http://opengameart.org/content/asteroids-set-02
 
+// not in yet...
 Panels: OhjiroChan, http://opengameart.org/content/menu-panels
 
 Ships: MillionthVector, http://millionthvector.blogspot.de, http://opengameart.org/content/pack-4-random-spaceships, http://opengameart.org/content/animated-ufo-round-spaceship
 
 Background: code32, http://opengameart.org/content/space-background-asteroid
 
+Font: BRIDGEco, http://www.fontspace.com/bridgeco/liner
 
 Sounds
 ======

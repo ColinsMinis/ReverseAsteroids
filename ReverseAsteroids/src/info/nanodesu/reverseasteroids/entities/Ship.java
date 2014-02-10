@@ -21,13 +21,16 @@ public class Ship extends AnimatedSprite {
 		return ships.get((int) (Math.random() * ships.size));
 	}
 
-
 	public Ship(TextureAtlas atlas, Sound explosionSound) {
 		super(selectTexture(atlas));
+		init(atlas, explosionSound);
+	}
+
+	private void init(TextureAtlas atlas, Sound explosionSound) {
 		initExplosionTexture(atlas);
 		this.explosionSound = explosionSound;
 		
-		int size = 60;
+		int size = 40 + (int) (Math.random() * 30);
 		int startX = (int) (Math.random() * Utls.WORLD_WIDTH);
 		int startY = (int) (Math.random() * Utls.WORLD_HEIGHT);
 		setBounds(startX, startY, size/2, size);
@@ -37,11 +40,17 @@ public class Ship extends AnimatedSprite {
 		int moveX = (int) (Math.random() * 120)-60;
 		int moveY = (int) (Math.random() * 120)-60;
 		rotateTowards(moveX, moveY);
-		setRotation(getRotation() - 90);
+		rotate(-90);
 		setMoveSpeedX(moveX);
 		setMoveSpeedY(moveY);
 	}
 
+	public Ship(TextureAtlas atlas, Animation ani, Sound exploSound) {
+		super(ani);
+		init(atlas, exploSound);
+		setRotation(0);
+	}
+	
 	private void initExplosionTexture(TextureAtlas atlas) {
 		explosions = Utls.flatten(atlas.findRegion("ingame/explosions").split(64, 64));
 		int exIndex = (int)(Math.random() * 4);
@@ -63,12 +72,7 @@ public class Ship extends AnimatedSprite {
 		float newWidth = getWidth() * 4;
 		float newHeight = getHeight() * 4;
 		
-		float diffW = newWidth - getWidth();
-		float diffH = newHeight - getHeight();
-		
-		setSize(newWidth, newHeight);
-		setOrigin(getWidth()/2, getHeight()/2);
-		translate(-diffW/2, -diffH/2);
+		growByOrigin(newWidth, newHeight);
 	}
 	
 	public boolean isExploded() {

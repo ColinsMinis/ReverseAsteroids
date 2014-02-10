@@ -10,8 +10,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "ReverseAsteroids";
 		cfg.useGL20 = false;
-		cfg.width = 480;
-		cfg.height = 320;
+		cfg.width = 480 * 1;
+		cfg.height = 320 * 1;
 		
 //		packTextures();
 		
