@@ -1,5 +1,6 @@
 package info.nanodesu.reverseasteroids.utils;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,6 +16,8 @@ public class TextBox{
 	private float width;
 	private float height;
 
+	private Color clr;
+	
 	public TextBox(String text, BitmapFont font) {
 		this(text, font, null);
 	}
@@ -23,6 +26,14 @@ public class TextBox{
 		this.font = font;
 		this.back = back;
 		setText(text);
+	}
+	
+	public void setClr(Color clr) {
+		this.clr = clr;
+	}
+	
+	public Color getClr() {
+		return clr;
 	}
 	
 	public void setX(float x) {
@@ -70,6 +81,9 @@ public class TextBox{
 		if (back != null) {
 			batch.draw(back, x, y, width, height);
 		}
+		Color c = font.getColor();
+		font.setColor(clr);
 		font.draw(batch, text, x, y);
+		font.setColor(c);
 	}
 }

@@ -1,6 +1,5 @@
 package info.nanodesu.reverseasteroids.utils;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -58,15 +57,18 @@ public class AnimatedSprite extends Sprite implements Simulate {
 	
 	@Override
 	public void draw(SpriteBatch spriteBatch) {
-		float dt = Gdx.graphics.getDeltaTime();
 		if (ani != null) {
-			animate(dt);
+			TextureRegion keyFrame = ani.getKeyFrame(stateTime);
+			setRegion(keyFrame);
 		}
-
 		super.draw(spriteBatch);
 	}
 	
 	public void simulate(float dt) {
+		if (ani != null) {
+			animate(dt);
+		}
+		
 		move(dt);
 		if (boxedWorld) {
 			boxWorld();
@@ -93,8 +95,6 @@ public class AnimatedSprite extends Sprite implements Simulate {
 	
 	private void animate(float dt) {
 		stateTime += dt;
-		TextureRegion keyFrame = ani.getKeyFrame(stateTime);
-		setRegion(keyFrame);
 	}
 
 	private void move(float dt) {

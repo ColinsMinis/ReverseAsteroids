@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Asteroid extends AnimatedSprite {
 	
-	private static float MIN_WAIT = 3;
+	private static float MIN_WAIT = 1;
 	
 	private static AtlasRegion selectTexture(TextureAtlas atlas) {
 		return atlas.findRegion("ingame/asteroid");
@@ -34,15 +34,15 @@ public class Asteroid extends AnimatedSprite {
 	
 	@Override
 	public void simulate(float dt) {
-		moveTimer += Gdx.graphics.getDeltaTime();
+		moveTimer += dt;
 		float charge = getMoveCharge();
 		setColor(1, charge, charge, 1);
 		if (charge >= 1 && Gdx.input.isTouched()) {
 			Vector3 touch = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touch);
 			touch.sub(getXByOrgin(), getYByOrigin(), 0);
-			setMoveSpeedX(touch.x);
-			setMoveSpeedY(touch.y);
+			setMoveSpeedX(touch.x*1.5f);
+			setMoveSpeedY(touch.y*1.5f);
 			moveTimer = 0;
 		}
 		super.simulate(dt);

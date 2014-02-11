@@ -1,6 +1,5 @@
 package info.nanodesu.reverseasteroids.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -27,7 +26,7 @@ public class Enemy extends Ship {
 	@Override
 	public void simulate(float dt) {
 		super.simulate(dt);
-		lifeTime += Gdx.graphics.getDeltaTime();
+		lifeTime += dt;
 	}
 	
 	public float getInitPercent() {
