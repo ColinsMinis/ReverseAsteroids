@@ -2,7 +2,6 @@ package info.nanodesu.reverseasteroids.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.reflect.ArrayReflection;
 
 public class Utls {
@@ -10,11 +9,8 @@ public class Utls {
 	public static int WORLD_WIDTH = 600;
 	public static int WORLD_HEIGHT = 360;
 	
-	public static BitmapFont getFont(int pixels) {
-		FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("gfx/font.TTF"));
-		BitmapFont font = gen.generateFont(pixels);
-		gen.dispose();
-		return font;
+	public static BitmapFont getFont() {
+		return new BitmapFont(Gdx.files.internal("gfx/font.fnt"), Gdx.files.internal("gfx/font.png"), false);
 	}
 	
 	public static <T> T[] flatten(T[][] arr) {

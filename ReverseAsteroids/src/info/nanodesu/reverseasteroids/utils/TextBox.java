@@ -2,29 +2,22 @@ package info.nanodesu.reverseasteroids.utils;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
-public class TextBox{
+public class TextBox {
 	private BitmapFont font; 
-	private TextureRegion back;
 	
 	private String text;
-	private float x;
-	private float y;
-	private float width;
-	private float height;
-
-	private Color clr;
+	
+	private Rectangle bounds;
+	
+	private Color clr = Color.WHITE;
 	
 	public TextBox(String text, BitmapFont font) {
-		this(text, font, null);
-	}
-	
-	public TextBox(String text, BitmapFont font, TextureRegion back) {
+		bounds = new Rectangle();
 		this.font = font;
-		this.back = back;
 		setText(text);
 	}
 	
@@ -37,40 +30,44 @@ public class TextBox{
 	}
 	
 	public void setX(float x) {
-		this.x = x;
+		bounds.x = x;
 	}
 	
 	public void setY(float y) {
-		this.y = y;
+		bounds.y = y;
 	}
 	
 	public float getX() {
-		return x;
+		return bounds.x;
 	}
 	
 	public float getY() {
-		return y;
+		return bounds.y;
 	}
 	
 	/**
 	 * width and height are determined by the text
 	 */
 	public float getWidth() {
-		return width;
+		return bounds.width;
 	}
 
 	/**
 	 * width and height are determined by the text
 	 */
 	public float getHeight() {
-		return height;
+		return bounds.height;
+	}
+	
+	public Rectangle getBounds() {
+		return bounds;
 	}
 	
 	public void setText(String text) {
 		this.text = text;
 		TextBounds bnds = font.getBounds(text);
-		width = bnds.width;
-		height = bnds.height;
+		bounds.width = bnds.width;
+		bounds.height = bnds.height;
 	}
 	
 	public String getText() {
@@ -78,12 +75,9 @@ public class TextBox{
 	}
 	
 	public void draw(SpriteBatch batch) {
-		if (back != null) {
-			batch.draw(back, x, y, width, height);
-		}
 		Color c = font.getColor();
 		font.setColor(clr);
-		font.draw(batch, text, x, y);
+		font.drawMultiLine(batch, text, bounds.x, bounds.y+bounds.height);
 		font.setColor(c);
 	}
 }

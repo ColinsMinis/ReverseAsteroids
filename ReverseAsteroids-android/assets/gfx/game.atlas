@@ -5,112 +5,112 @@ filter: Nearest,Nearest
 repeat: none
 ingame/alien
   rotate: false
-  xy: 680, 451
+  xy: 680, 353
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 ingame/alien
   rotate: false
-  xy: 680, 385
+  xy: 680, 287
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 10
 ingame/alien
   rotate: false
-  xy: 680, 319
+  xy: 516, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 11
 ingame/alien
   rotate: false
-  xy: 516, 2
+  xy: 616, 211
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 12
 ingame/alien
   rotate: false
-  xy: 616, 211
+  xy: 616, 145
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 13
 ingame/alien
   rotate: false
-  xy: 616, 145
+  xy: 616, 79
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 14
 ingame/alien
   rotate: false
-  xy: 616, 79
+  xy: 914, 629
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 15
 ingame/alien
   rotate: false
-  xy: 914, 629
+  xy: 914, 563
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 ingame/alien
   rotate: false
-  xy: 914, 563
+  xy: 682, 221
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 3
 ingame/alien
   rotate: false
-  xy: 746, 451
+  xy: 682, 155
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 4
 ingame/alien
   rotate: false
-  xy: 746, 385
+  xy: 682, 89
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 5
 ingame/alien
   rotate: false
-  xy: 746, 319
+  xy: 914, 497
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 6
 ingame/alien
   rotate: false
-  xy: 812, 455
+  xy: 582, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 7
 ingame/alien
   rotate: false
-  xy: 812, 389
+  xy: 746, 353
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 8
 ingame/alien
   rotate: false
-  xy: 812, 323
+  xy: 746, 287
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 9
 ingame/asteroid
   rotate: false
-  xy: 914, 497
+  xy: 748, 221
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -127,6 +127,13 @@ ingame/explosions
   xy: 2, 3
   size: 512, 512
   orig: 512, 512
+  offset: 0, 0
+  index: -1
+ingame/kill
+  rotate: false
+  xy: 680, 419
+  size: 96, 96
+  orig: 96, 96
   offset: 0, 0
   index: -1
 ingame/ship

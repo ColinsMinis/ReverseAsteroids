@@ -31,10 +31,7 @@ public class Ship extends AnimatedSprite {
 		this.explosionSound = explosionSound;
 		
 		int size = 40 + (int) (Math.random() * 30);
-		int startX = (int) (Math.random() * Utls.WORLD_WIDTH);
-		int startY = (int) (Math.random() * Utls.WORLD_HEIGHT);
-		setBounds(startX, startY, size/2, size);
-		setOrigin(getWidth()/2, getHeight()/2);
+		setRndBounds(size/2, size);
 		setBoxedWorld(true);
 		
 		int moveX = (int) (Math.random() * 120)-60;
@@ -63,7 +60,10 @@ public class Ship extends AnimatedSprite {
 	public void explode() {
 		Animation ani = new Animation(1/20f, explosions);
 		setAnimation(ani);
-		explosionSound.play();
+		if (explosionSound != null) {
+			explosionSound.play();
+		}
+		
 		isExploded = true;
 		growExplosion();
 	}

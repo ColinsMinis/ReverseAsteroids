@@ -3,7 +3,6 @@ package info.nanodesu.reverseasteroids;
 import info.nanodesu.reverseasteroids.utils.Utls;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,10 +16,14 @@ public class ReverseAsteroidsMain extends Game {
 	@Override
 	public void create() {
 		initCamera();
+		initResources();
+		
+		setScreen(new Menu(this));
+	}
+	
+	public void initResources() {
 		initFont();
 		initBatch();
-		
-		setScreen(new Ingame(this));
 	}
 	
 	public SpriteBatch getBatch() {
@@ -40,10 +43,9 @@ public class ReverseAsteroidsMain extends Game {
 	}
 
 	private void initFont() {
-		int sizeF = Gdx.graphics.getHeight() > 400 ? 20 : 10;
-		font = Utls.getFont(Gdx.graphics.getHeight() / sizeF);
+		font = Utls.getFont();
 	}
-
+	
 	private void initCamera() {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Utls.WORLD_WIDTH, Utls.WORLD_HEIGHT);
@@ -52,6 +54,9 @@ public class ReverseAsteroidsMain extends Game {
 	
 	@Override
 	public void dispose() {
+		if (getScreen() != null) {
+			getScreen().dispose();			
+		}
 		batch.dispose();
 		font.dispose();
 	}

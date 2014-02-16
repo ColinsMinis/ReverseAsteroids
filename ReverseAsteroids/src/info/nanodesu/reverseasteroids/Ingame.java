@@ -3,6 +3,7 @@ package info.nanodesu.reverseasteroids;
 import info.nanodesu.reverseasteroids.entities.Asteroid;
 import info.nanodesu.reverseasteroids.entities.Enemy;
 import info.nanodesu.reverseasteroids.entities.Ship;
+import info.nanodesu.reverseasteroids.utils.AnimatedSprite;
 import info.nanodesu.reverseasteroids.utils.Simulate;
 import info.nanodesu.reverseasteroids.utils.SmoothSimulator;
 import info.nanodesu.reverseasteroids.utils.TextBox;
@@ -11,6 +12,8 @@ import info.nanodesu.reverseasteroids.utils.Utls;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -25,6 +28,12 @@ import com.badlogic.gdx.utils.Array;
 
 public class Ingame implements Screen {
 	
+	private static final int ENEMY_SPAWN_FREQUENCY = 2;
+
+	private static final double KILL_SPAWN_CHANCE = 0.15;
+
+	private static final double KILL_CHANCE = 0.35;
+
 	private static final int SHIPS_CNT = 8;
 	
 	private TextureAtlas textures;
@@ -35,15 +44,20 @@ public class Ingame implements Screen {
 	
 	private Array<Enemy> enemies;
 	
+	private AnimatedSprite powerup;
+	
 	private TextBox txtDisplay;
 	
 	private float explosionProcessDt = 0;
 	private int explosionsToProcess = 0;
 	
+	private float scoreIncTime = 0;
 	private int score;
+	private int killCnt;
 	
 	private SmoothSimulator sim;
 	
+	private Sound killPower;
 	private Sound[] explosion;
 	private Music music;
 	
@@ -56,6 +70,16 @@ public class Ingame implements Screen {
 	private Vector2 tmpVec2 = new Vector2(0, 0);
 	
 	private ReverseAsteroidsMain main;
+	
+	private InputProcessor inputProc = new InputAdapter() {
+		public boolean keyDown(int keycode) {
+			if (keycode == 67 || keycode == 4) { // 4 is back on android, 67 is backspace on windows
+				main.setScreen(new Menu(main));
+				dispose();
+			}
+			return false;
+		}
+	};
 	
 	public Ingame(ReverseAsteroidsMain main) {
 		this.main = main;
@@ -73,6 +97,8 @@ public class Ingame implements Screen {
 		for (int i = 0; i < expCnt; i++) {
 			explosion[i] = Gdx.audio.newSound(Gdx.files.internal("sfx/boom"+(i+1)+".mp3"));
 		}
+
+		killPower = Gdx.audio.newSound(Gdx.files.internal("sfx/kill.mp3"));
 		
 		reset();
 		
@@ -80,10 +106,15 @@ public class Ingame implements Screen {
 		
 		music = Gdx.audio.newMusic(Gdx.files.internal("sfx/space_chase.mp3"));
 		music.setLooping(true);
+		
+		Gdx.input.setInputProcessor(inputProc);
+		Gdx.input.setCatchBackKey(true);
 	}
 	
-	public void reset() {
-		setScore(0);
+	public void reset(){
+		score = 0;
+		powerup = null;
+		setKillCnt(0);
 		sim.getSims().clear();
 		initCollisionSim();
 		
@@ -99,7 +130,7 @@ public class Ingame implements Screen {
 		
 		spawnEnemy();
 		
-		txtDisplay.setText("");
+		setScoreText();
 		setScoreTextPosition();
 		
 		gameOver = false;
@@ -108,7 +139,7 @@ public class Ingame implements Screen {
 
 	private void setScoreTextPosition() {
 		txtDisplay.setX(0);
-		txtDisplay.setY(main.getFont().getLineHeight());
+		txtDisplay.setY(5);
 	}
 	
 	private void initCollisionSim() {
@@ -120,29 +151,47 @@ public class Ingame implements Screen {
 		});
 	}
 	
-	private void setScore(int v) {
-		score = v;
-		setScoreText();
+	private void setKillCnt(int v) {
+		killCnt = v;
 		
-		int h = score / 10;
-		if (score % ((h+1) * 3) == 0) {
+		if (killCnt % ENEMY_SPAWN_FREQUENCY == 0) {
 			spawnEnemy();
+		}
+		
+		if (Math.random() > 1-KILL_SPAWN_CHANCE) {
+			spawnPowerup();
 		}
 	}
 
-	private void setScoreText() {
-		txtDisplay.setClr(new Color((float)Math.random(), (float)Math.random(), (float)Math.random(), 1));
-		txtDisplay.setText("Score: "+score);
+	private String getKString(int n) {
+		if (n > 10000) {
+			return n/1000+"K";
+		}
+		if (n > 1E7) {
+			return n/1E6+"M";
+		}
+		return n+"";
 	}
 	
-	private void incScore() {
-		setScore(score + 1);
+	private void setScoreText() {
+		txtDisplay.setText("Score: "+getKString(score) + " (+"+getKString(getActiveEnemyCount()*killCnt)+")");
+	}
+	
+	private void incKillCnt() {
+		setKillCnt(killCnt + 1);
 	}
 	
 	private void spawnEnemy() {
-		Enemy e = new Enemy(textures, rndExplo());
+		Enemy e = new Enemy(textures, null);
 		enemies.add(e);
 		sim.getSims().add(e);
+	}
+	
+	private void spawnPowerup() {
+		if (powerup == null) {
+			powerup = new AnimatedSprite(textures.findRegion("ingame/kill"));
+			powerup.setRndBounds(50, 50);
+		}
 	}
 	
 	private void spawnShip() {
@@ -159,6 +208,8 @@ public class Ingame implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		main.getCamera().update();
 		
 		SpriteBatch batch = main.getBatch();
 		
@@ -178,6 +229,7 @@ public class Ingame implements Screen {
 		} else {
 			if (!paused) {
 				sim.simulate(delta);
+				checkScoreInc(delta);
 			}
 			
 			batch.begin();
@@ -192,7 +244,9 @@ public class Ingame implements Screen {
 				}
 			}
 			
-			for (Enemy e: enemies) {
+			Iterator<Enemy> enemyIter = enemies.iterator();
+			while (enemyIter.hasNext()) {
+				Enemy e = enemyIter.next();
 				if (e.getInitPercent() >= 1) {
 					e.setColor(1, .1f, .1f, 1);
 				} else {
@@ -200,9 +254,17 @@ public class Ingame implements Screen {
 				}
 				e.draw(batch, e.getInitPercent());
 				checkGameOver(e);
+				
+				if (e.isExploded() && e.getStateTime() > 5) {
+					enemyIter.remove();
+				}
 			}
 			
 			asteroid.draw(batch);
+			
+			if (powerup != null) {
+				powerup.draw(batch);
+			}
 			
 			txtDisplay.draw(batch);
 			
@@ -210,6 +272,28 @@ public class Ingame implements Screen {
 		}
 	}
 
+	private int getActiveEnemyCount() {
+		int cnt = 0;
+		for (Enemy e: enemies) {
+			if (!e.isExploded() && e.getInitPercent() >= 1) {
+				cnt++;
+			}
+		}
+		return cnt;
+	}
+	
+	private void checkScoreInc(float dt) {
+		scoreIncTime += dt;
+		if (scoreIncTime > 1) {
+			scoreIncTime = 0;
+			int inc = getActiveEnemyCount();
+			score += inc*killCnt;
+			if (inc > 0) {
+				setScoreText();
+			}
+		}
+	}
+	
 	private void checkUnpause()  {
 		if (paused && Gdx.input.isTouched()) {
 			setPaused(false);
@@ -219,7 +303,7 @@ public class Ingame implements Screen {
 	public void setPaused(boolean paused) {
 		if (paused != this.paused) {
 			if (paused) {
-				showMiddleMessage("Paused, tap to continue");
+				showMiddleMessage("Tap to continue");
 			} else {
 				setScoreTextPosition();
 				setScoreText();
@@ -233,14 +317,14 @@ public class Ingame implements Screen {
 	}
 	
 	private void checkGameOver(Enemy e) {
-		if (e.getInitPercent() >= 1) {
+		if (!e.isExploded() && e.getInitPercent() >= 1) {
 			tmpVec.x = e.getXByOrgin();
 			tmpVec.y = e.getYByOrigin();
 			tmpVec2.x = asteroid.getXByOrgin();
 			tmpVec2.y = asteroid.getYByOrigin();
 			if (tmpVec.sub(tmpVec2).len() < asteroid.getWidth()/2 + e.getWidth()/2) {
 				gameOver = true;
-				String txt = "Game over: "+score;
+				String txt = "Game over\n"+score;
 				showMiddleMessage(txt);
 			}
 		}
@@ -251,7 +335,7 @@ public class Ingame implements Screen {
 		txtDisplay.setClr(new Color(1, 1, 1, 1));
 		txtDisplay.setText(txt);
 		txtDisplay.setX(Utls.WORLD_WIDTH/2-b.width/2);
-		txtDisplay.setY(Utls.WORLD_HEIGHT/2+b.height/2);
+		txtDisplay.setY(Utls.WORLD_HEIGHT/2);
 	}
 
 	private void checkCollisions(float dt) {
@@ -264,9 +348,22 @@ public class Ingame implements Screen {
 			}
 		}
 		
+		if (powerup != null && asteroid.getBoundingRectangle().overlaps(powerup.getBoundingRectangle())) {
+			powerup = null;
+			if (enemies.size > 0) {
+				for (Enemy e: enemies) {
+					if (!e.isExploded() && Math.random() > 1-KILL_CHANCE) {
+						e.setColor(0, 1, 0, 1);
+						e.explode();
+					}
+				}
+				killPower.play();
+			}
+		}
+		
 		explosionProcessDt += dt;
 		if (explosionsToProcess > 0 && explosionProcessDt > 0.25f) {
-			incScore();
+			incKillCnt();
 			explosionsToProcess--;
 			explosionProcessDt = 0;
 		}
@@ -305,7 +402,13 @@ public class Ingame implements Screen {
 
 	@Override
 	public void dispose() {
+		Gdx.input.setCatchBackKey(false);
+		Gdx.input.setInputProcessor(null);
 		music.dispose();
 		textures.dispose();
+		killPower.dispose();
+		for (Sound e: explosion) {
+			e.dispose();
+		}
 	}
 }

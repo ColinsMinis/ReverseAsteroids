@@ -25,6 +25,13 @@ public class AnimatedSprite extends Sprite implements Simulate {
 		this.stateTime = 0;
 	}
 	
+	public void setRndBounds(int width, int height) {
+		int startX = (int) (Math.random() * Utls.WORLD_WIDTH);
+		int startY = (int) (Math.random() * Utls.WORLD_HEIGHT);
+		setBounds(startX, startY, width, height);
+		setOrigin(getWidth()/2, getHeight()/2);
+	}
+	
 	public void growByOrigin(float newWidth, float newHeight) {
 		float diffW = newWidth - getWidth();
 		float diffH = newHeight - getHeight();
