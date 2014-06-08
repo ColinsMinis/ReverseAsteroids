@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Reverse Asteroids</string>
+    <string name="app_id">753054483825</string>
+    <string name="achievement_reach_1000_points">CgkI8YqurPUVEAIQAQ</string>
+    <string name="achievement_reach_10000_points">CgkI8YqurPUVEAIQAg</string>
+    <string name="achievement_reach_100000_points">CgkI8YqurPUVEAIQAw</string>
+    <string name="achievement_destructive">CgkI8YqurPUVEAIQBA</string>
+    <string name="achievement_quite_a_lot">CgkI8YqurPUVEAIQBQ</string>
+    <string name="leaderboard_highscores">CgkI8YqurPUVEAIQBg</string>
+
 </resources>

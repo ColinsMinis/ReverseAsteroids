@@ -25,12 +25,20 @@ public class Menu implements Screen {
 
 	private void initTextBoxes(ReverseAsteroidsMain main) {
 		startBox = new TextBox("START", main.getFont());
-		scoresBox = new TextBox("HIGHSCORES", main.getFont());
+		scoresBox = new TextBox("HIGHSCORE", main.getFont());
 		creditsBox = new TextBox("CREDITS", main.getFont());
 		exitBox = new TextBox("EXIT", main.getFont());
 		repositionBoxes();
 	}
-
+	
+	private void handleHighscores() {
+		if (main.getActions().getSignedInGPGS()) {
+			main.getActions().getLeaderboardGPGS();
+		} else {
+			main.getActions().loginGPGS();
+		}
+	}
+	
 	private void repositionBoxes() {
 		placeBoxes(exitBox, creditsBox, scoresBox, startBox);
 	}
@@ -73,7 +81,7 @@ public class Menu implements Screen {
 			}
 			
 			if (scoresBox.getBounds().contains(touch.x, touch.x)) {
-				System.out.println("SCORES");
+				handleHighscores();
 			}
 			
 			if (startBox.getBounds().contains(touch.x, touch.y)) {
@@ -84,7 +92,6 @@ public class Menu implements Screen {
 	
 	@Override
 	public void resize(int width, int height) {
-		System.out.println(width+"/"+height);
 		repositionBoxes();
 	}
 

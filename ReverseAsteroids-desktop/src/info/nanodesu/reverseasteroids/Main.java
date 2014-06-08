@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.imagepacker.TexturePacker2;
 import com.badlogic.gdx.tools.imagepacker.TexturePacker2.Settings;
 
-public class Main {
+public class Main implements ActionResolver {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "ReverseAsteroids";
@@ -15,11 +15,41 @@ public class Main {
 		
 //		packTextures();
 		
-		new LwjglApplication(new ReverseAsteroidsMain(), cfg);
+		new LwjglApplication(new ReverseAsteroidsMain(new Main()), cfg);
 	}
 	
 	public static void packTextures() {
 		Settings packSettings = new Settings();
 		TexturePacker2.process(packSettings, "../asset_src/to_pack", "../ReverseAsteroids-android/assets/gfx", "game");		
+	}
+
+	@Override
+	public boolean getSignedInGPGS() {
+		return false;
+	}
+
+	@Override
+	public void loginGPGS() {
+		System.out.println("login google");
+	}
+
+	@Override
+	public void submitScoreGPGS(int score) {
+		System.out.println("Submit score: "+score);
+	}
+
+	@Override
+	public void unlockAchievementGPGS(Achievements unlock) {
+		System.out.println("Unlock achievement: "+unlock);
+	}
+
+	@Override
+	public void getLeaderboardGPGS() {
+		System.out.println("getleaderboard");
+	}
+
+	@Override
+	public void getAchievementsGPGS() {
+		System.out.println("getachievements");
 	}
 }

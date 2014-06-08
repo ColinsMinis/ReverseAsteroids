@@ -13,12 +13,22 @@ public class ReverseAsteroidsMain extends Game {
 	private OrthographicCamera camera;
 	private BitmapFont font;
 	
+	private ActionResolver actions;
+	
+	public ReverseAsteroidsMain(ActionResolver resolver) {
+		this.actions = resolver;
+	}
+	
 	@Override
 	public void create() {
 		initCamera();
 		initResources();
 		
 		setScreen(new Menu(this));
+	}
+	
+	public ActionResolver getActions() {
+		return actions;
 	}
 	
 	public void initResources() {

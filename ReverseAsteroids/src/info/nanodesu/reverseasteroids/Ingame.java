@@ -34,7 +34,7 @@ public class Ingame implements Screen {
 
 	private static final double KILL_CHANCE = 0.35;
 
-	private static final int SHIPS_CNT = 8;
+	private static final int SHIPS_CNT = 12;
 	
 	private TextureAtlas textures;
 	
@@ -326,6 +326,9 @@ public class Ingame implements Screen {
 				gameOver = true;
 				String txt = "Game over\n"+score;
 				showMiddleMessage(txt);
+				if (main.getActions().getSignedInGPGS()) {
+					main.getActions().submitScoreGPGS(score);
+				}
 			}
 		}
 	}
