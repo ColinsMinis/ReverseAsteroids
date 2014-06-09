@@ -32,11 +32,7 @@ public class Menu implements Screen {
 	}
 	
 	private void handleHighscores() {
-		if (main.getActions().getSignedInGPGS()) {
-			main.getActions().getLeaderboardGPGS();
-		} else {
-			main.getActions().loginGPGS();
-		}
+		main.getActions().getLeaderboardGPGS();
 	}
 	
 	private void repositionBoxes() {
@@ -80,7 +76,7 @@ public class Menu implements Screen {
 				Gdx.app.getNet().openURI("https://github.com/OpenSourcedMinis/ReverseAsteroids/blob/master/credits.md");
 			}
 			
-			if (scoresBox.getBounds().contains(touch.x, touch.x)) {
+			if (scoresBox.getBounds().contains(touch.x, touch.y)) {
 				handleHighscores();
 			}
 			

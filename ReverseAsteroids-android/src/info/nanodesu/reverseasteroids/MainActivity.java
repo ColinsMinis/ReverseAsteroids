@@ -2,20 +2,18 @@ package info.nanodesu.reverseasteroids;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 import com.google.example.games.basegameutils.GameHelper.GameHelperListener;
 
 public class MainActivity extends AndroidApplication implements ActionResolver, GameHelperListener {
 	
+	private static final String LOG_TAG = "ReverseAsteroids";
 	private GameHelper ghelp;
-	
-	public MainActivity() {
-		ghelp = new GameHelper(this);
-		ghelp.enableDebugLog(true, "GPGS");
-	}
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,7 +25,13 @@ public class MainActivity extends AndroidApplication implements ActionResolver, 
         cfg.useCompass = false;
         
         initialize(new ReverseAsteroidsMain(this), cfg);
+        
+        if (ghelp == null) {
+    		ghelp = new GameHelper(this, GameHelper.CLIENT_GAMES);
+    		ghelp.enableDebugLog(true);        	
+        }
         ghelp.setup(this);
+        Log.i(LOG_TAG, "init completed");
     }
     
     @Override
@@ -63,12 +67,13 @@ public class MainActivity extends AndroidApplication implements ActionResolver, 
 			});
 		} catch (final Exception ex) {
 			ex.printStackTrace();
+			throw new RuntimeException(ex);
 		}
 	}
 
 	@Override
 	public void submitScoreGPGS(int score) {
-		ghelp.getGamesClient().submitScore(getString(R.string.leaderboard_highscores), score);
+		Games.Leaderboards.submitScore(ghelp.getApiClient(), getString(R.string.leaderboard_highscores), score);
 	}
 
 	@Override
@@ -92,23 +97,32 @@ public class MainActivity extends AndroidApplication implements ActionResolver, 
 			break;
 		}
 		if (key != null) {
-			ghelp.getGamesClient().unlockAchievement(key);			
+			Games.Achievements.unlock(ghelp.getApiClient(), key);
 		}
 	}
 
 	@Override
 	public void getLeaderboardGPGS() {
-		startActivityForResult(ghelp.getGamesClient().getLeaderboardIntent(getString(R.string.leaderboard_highscores)), 100);
+		if (ghelp.isSignedIn()) {
+			startActivityForResult(Games.Leaderboards.getLeaderboardIntent(ghelp.getApiClient(),
+					getString(R.string.leaderboard_highscores)), 100);
+		} else if (!ghelp.isConnecting()) {
+			loginGPGS();
+		}
 	}
 
 	@Override
 	public void getAchievementsGPGS() {
-		startActivityForResult(ghelp.getGamesClient().getAchievementsIntent(), 101);
+		if (ghelp.isSignedIn()) {
+			startActivityForResult(Games.Achievements.getAchievementsIntent(ghelp.getApiClient()), 100);			
+		} else if (!ghelp.isConnecting()) {
+			loginGPGS();
+		}
 	}
 
 	@Override
 	public void onSignInFailed() {
-		
+
 	}
 
 	@Override
